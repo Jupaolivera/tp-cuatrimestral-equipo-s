@@ -1,0 +1,6 @@
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\bin\Debug\dominio.dll
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\bin\Debug\dominio.pdb
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\obj\Debug\dominio.csproj.AssemblyReference.cache
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\obj\Debug\dominio.csproj.CoreCompileInputs.cache
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\obj\Debug\dominio.dll
+C:\Users\tomas\OneDrive\Documentos\tp-cuatrimestral-equipo-s-main\dominio\obj\Debug\dominio.pdb
