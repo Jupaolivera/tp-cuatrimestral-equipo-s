@@ -1,9 +1,0 @@
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\bin\Debug\negocio.dll
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\bin\Debug\negocio.pdb
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\bin\Debug\dominio.dll
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\bin\Debug\dominio.pdb
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\obj\Debug\negocio.csproj.AssemblyReference.cache
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\obj\Debug\negocio.csproj.CoreCompileInputs.cache
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\obj\Debug\negocio.csproj.Up2Date
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\obj\Debug\negocio.dll
-C:\Users\estudiante\OneDrive\Escritorio\PROGRA3\tp-cuatrimestral-equipo-s\negocio\obj\Debug\negocio.pdb
