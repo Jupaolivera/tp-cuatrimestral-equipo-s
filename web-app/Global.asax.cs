@@ -17,5 +17,16 @@ namespace web_app
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            if (Context.Session != null)
+                Context.Session.Add("error", exc.ToString());
+
+            Server.ClearError();
+            Server.Transfer("Error.aspx");
+        }
     }
 }
