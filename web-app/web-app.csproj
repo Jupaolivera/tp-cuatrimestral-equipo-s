@@ -123,6 +123,7 @@
     <Content Include="Mesas.aspx" />
     <Content Include="Asignaciones.aspx" />
     <Content Include="Usuarios.aspx" />
+    <Content Include="FormularioUsuario.aspx" />
     <Content Include="Pedidos.aspx" />
     <Content Include="Reportes.aspx" />
     <Content Include="MisMesas.aspx" />
@@ -241,6 +242,13 @@
     </Compile>
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioUsuario.aspx.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioUsuario.aspx.designer.cs">
+      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pedidos.aspx.cs">
       <DependentUpon>Pedidos.aspx</DependentUpon>
