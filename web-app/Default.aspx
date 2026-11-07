@@ -3,9 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        <section class="row">
+        <section class="inicio-hero">
             <h1>Resto</h1>
-            <p class="lead">Gestión de pedidos y mesas de un restaurante.</p>
+            <p class="lead mb-0">Gestión de pedidos y mesas de un restaurante.</p>
         </section>
     </main>
 
