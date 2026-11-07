@@ -1,0 +1,126 @@
+﻿/* Estilos de Resto. Se incluye despues de Bootstrap (ver Bundle.config) para sobrescribir sus colores. */
+
+:root {
+    --resto-crema: #FBF6EC;
+    --resto-crema-oscuro: #F1E8D6;
+    --resto-terracota: #B5522F;
+    --resto-terracota-oscuro: #8F3F23;
+    --resto-oliva: #5F6F3E;
+    --resto-oliva-oscuro: #4A5731;
+    --resto-carbon: #2B2622;
+    --resto-texto: #3A332D;
+
+    --bs-body-bg: var(--resto-crema);
+    --bs-body-color: var(--resto-texto);
+    --bs-link-color: var(--resto-terracota);
+    --bs-link-hover-color: var(--resto-terracota-oscuro);
+}
+
+h1, h2, h3, .navbar-brand {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--resto-carbon);
+}
+
+h1, h2 {
+    font-weight: 600;
+}
+
+/* Barra de navegacion */
+.navbar.bg-dark {
+    background-color: var(--resto-carbon) !important;
+    border-bottom: 3px solid var(--resto-terracota);
+}
+
+.navbar-brand {
+    color: var(--resto-crema) !important;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(251, 246, 236, 0.7);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+    color: #fff;
+}
+
+/* Botones */
+.btn-primary {
+    --bs-btn-bg: var(--resto-terracota);
+    --bs-btn-border-color: var(--resto-terracota);
+    --bs-btn-hover-bg: var(--resto-terracota-oscuro);
+    --bs-btn-hover-border-color: var(--resto-terracota-oscuro);
+    --bs-btn-active-bg: var(--resto-terracota-oscuro);
+    --bs-btn-active-border-color: var(--resto-terracota-oscuro);
+    --bs-btn-disabled-bg: var(--resto-terracota);
+    --bs-btn-disabled-border-color: var(--resto-terracota);
+    --bs-btn-focus-shadow-rgb: 181, 82, 47;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: var(--resto-oliva);
+    --bs-btn-border-color: var(--resto-oliva);
+    --bs-btn-hover-bg: var(--resto-oliva);
+    --bs-btn-hover-border-color: var(--resto-oliva);
+    --bs-btn-active-bg: var(--resto-oliva-oscuro);
+    --bs-btn-active-border-color: var(--resto-oliva-oscuro);
+    --bs-btn-focus-shadow-rgb: 95, 111, 62;
+}
+
+/* Formularios */
+.form-control,
+.form-select {
+    max-width: none;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--resto-terracota);
+    box-shadow: 0 0 0 0.25rem rgba(181, 82, 47, 0.2);
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+/* Tablas y grillas */
+.table {
+    --bs-table-striped-bg: rgba(95, 111, 62, 0.07);
+    --bs-table-hover-bg: rgba(181, 82, 47, 0.1);
+}
+
+.table th {
+    --bs-table-bg: var(--resto-oliva);
+    --bs-table-accent-bg: transparent !important;
+    color: #fff !important;
+    font-weight: 500;
+}
+
+.table td a {
+    font-weight: 500;
+}
+
+/* Pantalla de inicio */
+.inicio-hero {
+    background-color: var(--resto-crema-oscuro);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 2rem;
+}
+
+.inicio-hero h1 {
+    font-size: 2.75rem;
+}
+
+/* Pie de pagina */
+hr {
+    border-color: var(--resto-crema-oscuro);
+    opacity: 1;
+}
+
+footer {
+    color: var(--resto-oliva);
+    font-size: 0.875rem;
+}

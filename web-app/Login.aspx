@@ -14,7 +14,6 @@
                 <input type="password" id="clave" class="form-control" />
             </div>
             <button type="button" class="btn btn-primary">Ingresar</button>
-            <p class="text-muted mt-3">Pantalla sin funcionalidad por ahora.</p>
         </div>
     </div>
 
