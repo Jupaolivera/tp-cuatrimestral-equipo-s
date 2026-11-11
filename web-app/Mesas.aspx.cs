@@ -23,7 +23,8 @@ namespace web_app
             if (e.CommandName == "Asignar")
             {
                 int idMesa = Convert.ToInt32(e.CommandArgument);
-                Response.Redirect("AsignarMozo.aspx?id=" + idMesa);
+                // Cambiamos AsignarMozo.aspx por Asignaciones.aspx
+                Response.Redirect("Asignaciones.aspx?id=" + idMesa);
             }
         }
     }
