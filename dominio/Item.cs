@@ -11,5 +11,9 @@ namespace dominio
         public int Stock { get; set; }
         public TipoItem Tipo { get; set; }
         public bool Activo { get; set; }
+        public string TipoDescripcion
+        {
+            get { return Tipo != null ? Tipo.Descripcion : ""; }
+        }
     }
 }

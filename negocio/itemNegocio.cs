@@ -14,7 +14,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT Id, Nombre, Descripcion, Precio, Stock, IdTipoItem, Activo FROM Items");
+                datos.setearConsulta("SELECT I.Id, I.Nombre, I.Descripcion, I.Precio, I.Stock, I.IdTipoItem, I.Activo, T.Descripcion AS DescTipo FROM Items I INNER JOIN TiposItem T ON T.Id = I.IdTipoItem WHERE I.Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -29,9 +29,9 @@ namespace negocio
                     aux.Precio = (decimal)datos.Lector["Precio"];
                     aux.Stock = (int)datos.Lector["Stock"];
 
-                    // Asignamos el objeto Tipo y su Id correspondiente
                     aux.Tipo = new TipoItem();
                     aux.Tipo.Id = (int)datos.Lector["IdTipoItem"];
+                    aux.Tipo.Descripcion = (string)datos.Lector["DescTipo"];
 
                     aux.Activo = (bool)datos.Lector["Activo"];
 

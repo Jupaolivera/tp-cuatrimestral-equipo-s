@@ -116,6 +116,7 @@
     <Content Include="Content\Resto.css" />
     <Content Include="Default.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="FormularioItem.aspx" />
     <Content Include="Items.aspx" />
     <Content Include="TiposItem.aspx" />
     <Content Include="Mesas.aspx" />
@@ -205,6 +206,10 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioItem.aspx.cs">
+      <DependentUpon>FormularioItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Items.aspx.cs">
       <DependentUpon>Items.aspx</DependentUpon>
