@@ -46,19 +46,31 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Items">Ítems</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/TiposItem">Tipos de ítem</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Mesas">Mesas</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Asignaciones">Asignaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Usuarios">Usuarios</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Pedidos">Pedidos</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Reportes">Reportes</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/MisMesas">Mis mesas</a></li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Ingresar</a></li>
+                    <asp:PlaceHolder ID="phMenu" runat="server">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
+                            <asp:PlaceHolder ID="phGerente" runat="server">
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Items">Ítems</a></li>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/TiposItem">Tipos de ítem</a></li>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Mesas">Mesas</a></li>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Asignaciones">Asignaciones</a></li>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Usuarios">Usuarios</a></li>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Reportes">Reportes</a></li>
+                            </asp:PlaceHolder>
+                            <asp:PlaceHolder ID="phMesero" runat="server">
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/MisMesas">Mis mesas</a></li>
+                            </asp:PlaceHolder>
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/Pedidos">Pedidos</a></li>
+                        </ul>
+                    </asp:PlaceHolder>
+                    <ul class="navbar-nav ms-auto">
+                        <asp:PlaceHolder ID="phSesion" runat="server">
+                            <li class="nav-item"><asp:Label ID="lblUsuario" CssClass="navbar-text me-lg-3" runat="server" /></li>
+                            <li class="nav-item"><asp:LinkButton ID="lnkSalir" Text="Salir" CssClass="nav-link" CausesValidation="false" OnClick="lnkSalir_Click" runat="server" /></li>
+                        </asp:PlaceHolder>
+                        <asp:PlaceHolder ID="phAnonimo" runat="server">
+                            <li class="nav-item"><a class="nav-link" runat="server" href="~/Login">Ingresar</a></li>
+                        </asp:PlaceHolder>
                     </ul>
                 </div>
             </div>
