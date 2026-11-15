@@ -119,6 +119,41 @@ namespace negocio
             }
         }
 
+        public Usuario login(string email, string clave)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("Select Id, Nombre, Apellido, Email, Clave, Perfil, Activo From Usuarios Where Email = @email And Activo = 1");
+                datos.setearParametro("@email", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read() && (string)datos.Lector["Clave"] == clave)
+                {
+                    Usuario aux = new Usuario();
+                    aux.Id = (int)datos.Lector["Id"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Apellido = (string)datos.Lector["Apellido"];
+                    aux.Email = (string)datos.Lector["Email"];
+                    aux.Clave = (string)datos.Lector["Clave"];
+                    aux.Perfil = (int)datos.Lector["Perfil"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    return aux;
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public bool existeEmail(string email, int idExcluido = 0)
         {
             AccesoDatos datos = new AccesoDatos();

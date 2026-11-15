@@ -4,16 +4,21 @@
 
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <h2>Ingresar</h2>
+            <h2 class="mb-3">Ingresar</h2>
             <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" id="email" class="form-control" />
+                <label for="txtEmail" class="form-label">Email</label>
+                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" MaxLength="100" />
+                <asp:RequiredFieldValidator ErrorMessage="Ingresá tu email." ControlToValidate="txtEmail" CssClass="text-danger" Display="Dynamic" runat="server" />
             </div>
             <div class="mb-3">
-                <label for="clave" class="form-label">Contraseña</label>
-                <input type="password" id="clave" class="form-control" />
+                <label for="txtClave" class="form-label">Contraseña</label>
+                <asp:TextBox ID="txtClave" runat="server" CssClass="form-control" TextMode="Password" MaxLength="100" />
+                <asp:RequiredFieldValidator ErrorMessage="Ingresá tu contraseña." ControlToValidate="txtClave" CssClass="text-danger" Display="Dynamic" runat="server" />
             </div>
-            <button type="button" class="btn btn-primary">Ingresar</button>
+
+            <asp:Label ID="lblError" CssClass="text-danger d-block mb-3" runat="server" />
+
+            <asp:Button Text="Ingresar" ID="btnIngresar" CssClass="btn btn-primary" OnClick="btnIngresar_Click" runat="server" />
         </div>
     </div>
 
