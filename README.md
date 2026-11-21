@@ -28,12 +28,15 @@ web-app/                         Páginas web
 2. Crear la base de datos ejecutando, en este orden, los scripts de `db/`:
    1. `01_estructura.sql`
    2. `02_datos_prueba.sql`
+   3. `03_pedidos_prueba.sql` (opcional): pedidos cerrados de ejemplo para probar
+      los reportes. Ejecutarlo una sola vez, porque si no duplica los pedidos.
 
    Se puede hacer desde SQL Server Management Studio o por consola:
 
    ```
    sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i db\01_estructura.sql
    sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i db\02_datos_prueba.sql
+   sqlcmd -S "(localdb)\MSSQLLocalDB" -E -i db\03_pedidos_prueba.sql
    ```
 
 3. Dejar `web-app` como proyecto de inicio y ejecutar con F5.
@@ -45,14 +48,24 @@ La cadena de conexión está en `web-app/Web.config` (nombre `RestoDB`) y apunta
 
 Usuarios cargados por `02_datos_prueba.sql` (clave provisoria `1234`):
 
-| Email               | Perfil  |
-|---------------------|---------|
-| gerente@resto.com   | Gerente |
-| mesero1@resto.com   | Mesero  |
-| mesero2@resto.com   | Mesero  |
+| Email               | Nombre          | Perfil  |
+|---------------------|-----------------|---------|
+| gerente@resto.com   | Laura Ramos     | Gerente |
+| mesero1@resto.com   | Marcos Pereyra  | Mesero  |
+| mesero2@resto.com   | Julieta Acosta  | Mesero  |
+
+Si la base ya estaba cargada con los nombres anteriores (Gerente Prueba, Mesero Uno
+y Mesero Dos), no hace falta volver a crearla: alcanza con ejecutar esto sobre
+`RESTO_DB`.
+
+```sql
+UPDATE Usuarios SET Nombre='Laura',   Apellido='Ramos'   WHERE Email='gerente@resto.com';
+UPDATE Usuarios SET Nombre='Marcos',  Apellido='Pereyra' WHERE Email='mesero1@resto.com';
+UPDATE Usuarios SET Nombre='Julieta', Apellido='Acosta'  WHERE Email='mesero2@resto.com';
+```
 
 ## Base de datos
 
 - Cada cambio en la estructura va en un script numerado nuevo dentro de `db/`
-  (`03_...sql`, `04_...sql`), sin editar los anteriores.
+  (`04_...sql`, `05_...sql`), sin editar los anteriores.
 - Las bajas son lógicas (columna `Activo`).
