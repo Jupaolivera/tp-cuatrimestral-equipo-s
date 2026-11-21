@@ -20,9 +20,9 @@ GO
 
 -- Perfil: 1 = Gerente, 2 = Mesero. Las claves son provisorias, solo para desarrollo.
 INSERT INTO Usuarios (Nombre, Apellido, Email, Clave, Perfil) VALUES
-    ('Gerente', 'Prueba', 'gerente@resto.com', '1234', 1),
-    ('Mesero', 'Uno', 'mesero1@resto.com', '1234', 2),
-    ('Mesero', 'Dos', 'mesero2@resto.com', '1234', 2);
+    ('Laura', 'Ramos', 'gerente@resto.com', '1234', 1),
+    ('Marcos', 'Pereyra', 'mesero1@resto.com', '1234', 2),
+    ('Julieta', 'Acosta', 'mesero2@resto.com', '1234', 2);
 GO
 
 -- Asignación de ejemplo para el día en que se ejecuta el script.
