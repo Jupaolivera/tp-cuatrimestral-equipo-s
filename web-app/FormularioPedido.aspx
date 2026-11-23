@@ -78,7 +78,7 @@
 
     <div class="row mt-3">
         <div class="col">
-            <asp:Button ID="btnCerrarPedido" runat="server" Text="Cerrar pedido" CssClass="btn btn-danger me-2" OnClick="btnCerrarPedido_Click" />
+           <asp:Button ID="btnCerrarPedido" runat="server" Text="Cerrar pedido" CssClass="btn btn-danger" OnClick="btnCerrarPedido_Click" OnClientClick="return confirm('¿Seguro que querés cerrar el pedido? Una vez cerrado ya no se va a poder modificar.');" />
             <asp:Button ID="btnVolver" runat="server" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" />
         </div>
     </div>
