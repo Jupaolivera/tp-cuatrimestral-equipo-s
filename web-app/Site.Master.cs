@@ -11,7 +11,7 @@ namespace web_app
         private static readonly string[] publicas = { "login.aspx", "error.aspx" };
 
         // Pantallas que puede ver un mesero (perfil 2); el gerente ve todas
-        private static readonly string[] delMesero = { "default.aspx", "mismesas.aspx", "pedidos.aspx" };
+        private static readonly string[] delMesero = { "default.aspx", "mismesas.aspx", "pedidos.aspx", "formulariopedido.aspx" };
 
         protected void Page_Init(object sender, EventArgs e)
         {

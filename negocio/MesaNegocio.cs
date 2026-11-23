@@ -40,15 +40,56 @@ namespace negocio
             }
         }
 
-        public void agregar(Mesa m)
+        public Mesa buscarPorNumero(int numero)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                // le mando 1 directo en el insert para el activo
-                datos.setearConsulta("insert into Mesas (Numero, Capacidad, Activo) values (@num, @cap, 1)");
-                datos.setearParametro("@num", m.Numero);
-                datos.setearParametro("@cap", m.Capacidad);
+                datos.setearConsulta("select Id, Numero, Capacidad, Activo from Mesas where Numero = @num");
+                datos.setearParametro("@num", numero);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Mesa m = new Mesa();
+                    m.Id = (int)datos.Lector["Id"];
+                    m.Numero = (int)datos.Lector["Numero"];
+                    m.Capacidad = (int)datos.Lector["Capacidad"];
+                    m.Activo = (bool)datos.Lector["Activo"];
+                    return m;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void agregar(Mesa m)
+        {
+            Mesa existente = buscarPorNumero(m.Numero);
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                if (existente != null)
+                {
+                    // si ya estaba dada de baja, la vuelvo a activar con la capacidad nueva
+                    datos.setearConsulta("update Mesas set Capacidad = @cap, Activo = 1 where Id = @id");
+                    datos.setearParametro("@cap", m.Capacidad);
+                    datos.setearParametro("@id", existente.Id);
+                }
+                else
+                {
+                    // le mando 1 directo en el insert para el activo
+                    datos.setearConsulta("insert into Mesas (Numero, Capacidad, Activo) values (@num, @cap, 1)");
+                    datos.setearParametro("@num", m.Numero);
+                    datos.setearParametro("@cap", m.Capacidad);
+                }
 
                 datos.ejecutarAccion();
             }

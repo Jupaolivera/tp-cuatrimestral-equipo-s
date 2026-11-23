@@ -27,7 +27,7 @@
             <asp:BoundField HeaderText="Apertura" DataField="FechaApertura" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
             <asp:BoundField HeaderText="Estado" DataField="EstadoTexto" />
             <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
-            <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="Ver" />
+            <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="agregar" />
         </Columns>
     </asp:GridView>
 </asp:Content>

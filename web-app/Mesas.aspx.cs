@@ -88,15 +88,31 @@ namespace web_app
                     return;
                 }
 
+                MesaNegocio negocio = new MesaNegocio();
+                int idActual = hfIdMesa.Value != "" ? int.Parse(hfIdMesa.Value) : 0;
+                Mesa existente = negocio.buscarPorNumero(numero);
+
+                if (existente != null && existente.Id != idActual)
+                {
+                    if (existente.Activo)
+                    {
+                        lblMensaje.Text = "Ya existe una mesa activa con ese número.";
+                        return;
+                    }
+                    else if (idActual != 0)
+                    {
+                        lblMensaje.Text = "Ese número pertenece a una mesa eliminada. Creala desde 'Agregar Nueva Mesa'.";
+                        return;
+                    }
+                }
+
                 Mesa m = new Mesa();
                 m.Numero = numero;
                 m.Capacidad = capacidad;
 
-                MesaNegocio negocio = new MesaNegocio();
-
-                if (hfIdMesa.Value != "")
+                if (idActual != 0)
                 {
-                    m.Id = int.Parse(hfIdMesa.Value);
+                    m.Id = idActual;
                     negocio.modificar(m);
                 }
                 else
