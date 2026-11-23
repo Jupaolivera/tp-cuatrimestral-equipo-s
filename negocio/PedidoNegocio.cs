@@ -164,6 +164,31 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public void eliminarItem(int idDetalle)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(
+                    "DECLARE @idItem INT, @cant INT, @idPedido INT; " +
+                    "SELECT @idItem = IdItem, @cant = Cantidad, @idPedido = IdPedido FROM DetallesPedido WHERE Id = @idDetalle; " +
+                    "IF @idItem IS NOT NULL BEGIN " +
+                    "DELETE FROM DetallesPedido WHERE Id = @idDetalle; " +
+                    "UPDATE Items SET Stock = Stock + @cant WHERE Id = @idItem; " +
+                    "UPDATE Pedidos SET Total = ISNULL((SELECT SUM(Cantidad * PrecioUnitario) FROM DetallesPedido WHERE IdPedido = @idPedido), 0) WHERE Id = @idPedido; " +
+                    "END");
+                datos.setearParametro("@idDetalle", idDetalle);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void cerrar(int idPedido)
         {
             AccesoDatos datos = new AccesoDatos();

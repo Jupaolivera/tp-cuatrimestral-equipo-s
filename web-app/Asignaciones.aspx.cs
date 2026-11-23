@@ -32,9 +32,6 @@ namespace web_app
                             ddlMesero.Items.Add(new ListItem(u.Nombre + " " + u.Apellido, u.Id.ToString()));
                         }
                     }
-                    ddlMesero.DataValueField = "Id";
-                    ddlMesero.DataTextField = "Nombre";
-                    ddlMesero.DataBind();
 
                     if (Request.QueryString["id"] != null)
                     {
@@ -89,7 +86,7 @@ namespace web_app
                     }
                 }
 
-               
+
                 if (existeHoy)
                 {
                     negocio.modificar(asig);
