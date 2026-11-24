@@ -16,6 +16,23 @@ namespace web_app
             return usuario.Perfil == 2 ? usuario.Id : 0;
         }
 
+        // El pedido de la dirección tiene que existir, ser del mesero (si es mesero) y seguir abierto
+        private bool pedidoAbiertoPropio()
+        {
+            int idPedido;
+            if (!int.TryParse(Request.QueryString["id"], out idPedido))
+                return false;
+
+            PedidoNegocio negocio = new PedidoNegocio();
+            foreach (Pedido p in negocio.listar(idMeseroFiltro()))
+            {
+                if (p.Id == idPedido)
+                    return p.Estado == 1;
+            }
+
+            return false;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["usuario"] == null)
@@ -101,19 +118,22 @@ namespace web_app
         {
             try
             {
+                if (!Page.IsValid)
+                    return;
+
+                if (!pedidoAbiertoPropio())
+                {
+                    Response.Redirect("Pedidos.aspx", false);
+                    return;
+                }
+
                 if (ddlItem.Items.Count == 0)
                 {
-                    lblMensaje.Text = "No hay ítems disponibles en la carta.";
+                    lblError.Text = "No hay ítems disponibles en la carta.";
                     return;
                 }
 
-                int cantidad;
-                if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad <= 0)
-                {
-                    lblMensaje.Text = "La cantidad debe ser mayor a 0.";
-                    return;
-                }
-
+                int cantidad = int.Parse(txtCantidad.Text.Trim());
                 int idPedido = int.Parse(Request.QueryString["id"]);
                 int idItem = int.Parse(ddlItem.SelectedValue);
 
@@ -131,13 +151,13 @@ namespace web_app
 
                 if (seleccionado == null)
                 {
-                    lblMensaje.Text = "El ítem seleccionado no está disponible.";
+                    lblError.Text = "El ítem seleccionado no está disponible.";
                     return;
                 }
 
                 if (cantidad > seleccionado.Stock)
                 {
-                    lblMensaje.Text = "No hay stock suficiente. Stock disponible: " + seleccionado.Stock + ".";
+                    lblError.Text = "No hay stock suficiente. Stock disponible: " + seleccionado.Stock + ".";
                     return;
                 }
 
@@ -145,7 +165,7 @@ namespace web_app
                 negocio.agregarItem(idPedido, idItem, cantidad);
 
                 txtCantidad.Text = "1";
-                lblMensaje.Text = "";
+                lblError.Text = "";
                 cargar();
             }
             catch (Exception ex)
@@ -161,11 +181,30 @@ namespace web_app
             {
                 try
                 {
+                    if (!pedidoAbiertoPropio())
+                    {
+                        Response.Redirect("Pedidos.aspx", false);
+                        return;
+                    }
+
                     int idDetalle = Convert.ToInt32(e.CommandArgument);
                     PedidoNegocio negocio = new PedidoNegocio();
+
+                    bool esDelPedido = false;
+                    foreach (DetallePedido d in negocio.listarDetalles(int.Parse(Request.QueryString["id"])))
+                    {
+                        if (d.Id == idDetalle)
+                            esDelPedido = true;
+                    }
+                    if (!esDelPedido)
+                    {
+                        Response.Redirect("Pedidos.aspx", false);
+                        return;
+                    }
+
                     negocio.eliminarItem(idDetalle);
 
-                    lblMensaje.Text = "";
+                    lblError.Text = "";
                     cargar();
                 }
                 catch (Exception ex)
@@ -180,8 +219,21 @@ namespace web_app
         {
             try
             {
+                if (!pedidoAbiertoPropio())
+                {
+                    Response.Redirect("Pedidos.aspx", false);
+                    return;
+                }
+
                 int idPedido = int.Parse(Request.QueryString["id"]);
                 PedidoNegocio negocio = new PedidoNegocio();
+
+                if (negocio.listarDetalles(idPedido).Count == 0)
+                {
+                    lblError.Text = "No se puede cerrar un pedido sin ítems.";
+                    return;
+                }
+
                 negocio.cerrar(idPedido);
 
                 Response.Redirect("Pedidos.aspx", false);

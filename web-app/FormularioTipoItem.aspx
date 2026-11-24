@@ -8,15 +8,13 @@
         <div class="col-md-5">
             <div class="mb-3">
                 <label for="txtDescripcion" class="form-label">Descripción</label>
-                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" />
+                <asp:TextBox ID="txtDescripcion" runat="server" CssClass="form-control" MaxLength="50" />
+                <asp:RequiredFieldValidator ErrorMessage="La descripción es obligatoria." ControlToValidate="txtDescripcion" CssClass="text-danger" Display="Dynamic" runat="server" />
             </div>
 
-            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" />
-            <br />
-
             <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminar_Click" Visible="false" />
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" />
+            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminar_Click" CausesValidation="false" Visible="false" />
+            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" CausesValidation="false" />
         </div>
     </div>
 
