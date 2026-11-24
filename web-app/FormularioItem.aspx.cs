@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -17,7 +18,6 @@ namespace web_app
         protected System.Web.UI.WebControls.TextBox txtPrecio;
         protected System.Web.UI.WebControls.TextBox txtStock;
         protected System.Web.UI.WebControls.DropDownList ddlTipo;
-        protected System.Web.UI.WebControls.Label lblMensaje;
         protected System.Web.UI.WebControls.Button btnAceptar;
         protected System.Web.UI.WebControls.Button btnEliminar;
         protected System.Web.UI.WebControls.Button btnCancelar;
@@ -67,28 +67,16 @@ namespace web_app
         {
             try
             {
-                decimal precio;
-                int stock;
+                if (!Page.IsValid)
+                    return;
 
-                if (txtNombre.Text == "")
-                {
-                    lblMensaje.Text = "El nombre es obligatorio.";
-                    return;
-                }
-                if (!decimal.TryParse(txtPrecio.Text, out precio) || precio < 0)
-                {
-                    lblMensaje.Text = "El precio debe ser un número mayor o igual a 0.";
-                    return;
-                }
-                if (!int.TryParse(txtStock.Text, out stock) || stock < 0)
-                {
-                    lblMensaje.Text = "El stock debe ser un número entero mayor o igual a 0.";
-                    return;
-                }
+                // El precio se acepta con punto o con coma como separador decimal
+                decimal precio = decimal.Parse(txtPrecio.Text.Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
+                int stock = int.Parse(txtStock.Text.Trim());
 
                 Item item = new Item();
-                item.Nombre = txtNombre.Text;
-                item.Descripcion = txtDescripcion.Text;
+                item.Nombre = txtNombre.Text.Trim();
+                item.Descripcion = txtDescripcion.Text.Trim();
                 item.Precio = precio;
                 item.Stock = stock;
                 item.Tipo = new TipoItem();

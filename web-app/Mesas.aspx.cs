@@ -8,6 +8,10 @@ namespace web_app
 {
     public partial class Mesas : System.Web.UI.Page
     {
+        // Se cargan una sola vez por listado, para mostrar el mesero de hoy de cada mesa
+        private List<AsignacionMesa> asignaciones;
+        private List<Usuario> usuarios;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -21,7 +25,16 @@ namespace web_app
             try
             {
                 MesaNegocio negocio = new MesaNegocio();
-                dgvMesas.DataSource = negocio.listar();
+                List<Mesa> lista = negocio.listar();
+
+                string texto = txtFiltro.Text.Trim();
+                if (texto != "")
+                    lista = lista.FindAll(x => x.Numero.ToString().Contains(texto));
+
+                asignaciones = new AsignacionMesaNegocio().listar();
+                usuarios = new UsuarioNegocio().listar();
+
+                dgvMesas.DataSource = lista;
                 dgvMesas.DataBind();
             }
             catch (Exception ex)
@@ -54,7 +67,7 @@ namespace web_app
                     }
                 }
 
-                lblMensaje.Text = "";
+                lblError.Text = "";
                 btnEliminar.Visible = true;
                 pnlFormulario.Visible = true;
             }
@@ -65,7 +78,7 @@ namespace web_app
             hfIdMesa.Value = "";
             txtNumero.Text = "";
             txtCapacidad.Text = "";
-            lblMensaje.Text = "";
+            lblError.Text = "";
             btnEliminar.Visible = false;
             pnlFormulario.Visible = true;
         }
@@ -74,19 +87,11 @@ namespace web_app
         {
             try
             {
-                int numero;
-                int capacidad;
+                if (!Page.IsValid)
+                    return;
 
-                if (!int.TryParse(txtNumero.Text, out numero) || numero <= 0)
-                {
-                    lblMensaje.Text = "El número de mesa debe ser mayor a 0.";
-                    return;
-                }
-                if (!int.TryParse(txtCapacidad.Text, out capacidad) || capacidad <= 0)
-                {
-                    lblMensaje.Text = "La capacidad debe ser mayor a 0.";
-                    return;
-                }
+                int numero = int.Parse(txtNumero.Text.Trim());
+                int capacidad = int.Parse(txtCapacidad.Text.Trim());
 
                 MesaNegocio negocio = new MesaNegocio();
                 int idActual = hfIdMesa.Value != "" ? int.Parse(hfIdMesa.Value) : 0;
@@ -96,12 +101,12 @@ namespace web_app
                 {
                     if (existente.Activo)
                     {
-                        lblMensaje.Text = "Ya existe una mesa activa con ese número.";
+                        lblError.Text = "Ya existe una mesa activa con ese número.";
                         return;
                     }
                     else if (idActual != 0)
                     {
-                        lblMensaje.Text = "Ese número pertenece a una mesa eliminada. Creala desde 'Agregar Nueva Mesa'.";
+                        lblError.Text = "Ese número pertenece a una mesa eliminada. Creala desde 'Agregar Nueva Mesa'.";
                         return;
                     }
                 }
@@ -152,12 +157,20 @@ namespace web_app
             pnlFormulario.Visible = false;
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            cargarMesas();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            cargarMesas();
+        }
+
         public string mozoDeHoy(object id)
         {
             int idMesa = (int)id;
-
-            AsignacionMesaNegocio asigNegocio = new AsignacionMesaNegocio();
-            List<AsignacionMesa> asignaciones = asigNegocio.listar();
 
             int idMesero = 0;
             foreach (AsignacionMesa a in asignaciones)
@@ -170,9 +183,6 @@ namespace web_app
 
             if (idMesero == 0)
                 return "Sin asignar";
-
-            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            List<Usuario> usuarios = usuarioNegocio.listar();
 
             foreach (Usuario u in usuarios)
             {

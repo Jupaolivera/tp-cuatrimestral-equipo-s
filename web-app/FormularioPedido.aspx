@@ -45,19 +45,21 @@
             </div>
             <div class="mb-3">
                 <label for="txtCantidad" class="form-label">Cantidad</label>
-                <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" Text="1" />
+                <asp:TextBox ID="txtCantidad" runat="server" CssClass="form-control" Text="1" MaxLength="6" />
+                <asp:RequiredFieldValidator ErrorMessage="La cantidad es obligatoria." ControlToValidate="txtCantidad" ValidationGroup="vgItem" CssClass="text-danger" Display="Dynamic" runat="server" />
+                <asp:RangeValidator ErrorMessage="La cantidad debe ser un entero mayor a 0." ControlToValidate="txtCantidad" ValidationGroup="vgItem" Type="Integer" MinimumValue="1" MaximumValue="999999" CssClass="text-danger" Display="Dynamic" runat="server" />
             </div>
 
-            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-2" />
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" />
 
-            <asp:Button ID="btnAgregarItem" runat="server" Text="Agregar ítem" CssClass="btn btn-primary" OnClick="btnAgregarItem_Click" />
+            <asp:Button ID="btnAgregarItem" runat="server" Text="Agregar ítem" CssClass="btn btn-primary" ValidationGroup="vgItem" OnClick="btnAgregarItem_Click" />
         </div>
     </asp:Panel>
 
     <div class="row mb-3">
         <div class="col">
             <h4>Ítems consumidos</h4>
-            <asp:GridView ID="dgvDetalles" runat="server" CssClass="table table-striped table-hover table-bordered"
+            <asp:GridView ID="dgvDetalles" runat="server" CssClass="table table-striped table-hover"
                 AutoGenerateColumns="False" OnRowCommand="dgvDetalles_RowCommand"
                 EmptyDataText="Todavía no hay ítems cargados en este pedido.">
                 <Columns>

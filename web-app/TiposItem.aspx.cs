@@ -14,19 +14,39 @@ namespace web_app
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
+                cargar();
+        }
+
+        private void cargar()
+        {
+            try
             {
-                try
-                {
-                    TipoItemNegocio negocio = new TipoItemNegocio();
-                    dgvTipos.DataSource = negocio.listar();
-                    dgvTipos.DataBind();
-                }
-                catch (Exception ex)
-                {
-                    Session.Add("error", ex.ToString());
-                    Response.Redirect("Error.aspx", false);
-                }
+                TipoItemNegocio negocio = new TipoItemNegocio();
+                List<TipoItem> lista = negocio.listar();
+
+                string texto = txtFiltro.Text.Trim().ToLower();
+                if (texto != "")
+                    lista = lista.FindAll(x => x.Descripcion.ToLower().Contains(texto));
+
+                dgvTipos.DataSource = lista;
+                dgvTipos.DataBind();
             }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            cargar();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            cargar();
         }
 
         protected void dgvTipos_SelectedIndexChanged(object sender, EventArgs e)

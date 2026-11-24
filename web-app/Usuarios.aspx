@@ -7,8 +7,25 @@
         <a href="~/FormularioUsuario" runat="server" class="btn btn-primary">Nuevo usuario</a>
     </div>
 
+    <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="row g-2 mb-3">
+        <div class="col-md-5">
+            <asp:TextBox ID="txtFiltro" runat="server" CssClass="form-control" placeholder="Buscar por nombre, apellido o email" />
+        </div>
+        <div class="col-md-3">
+            <asp:DropDownList ID="ddlPerfilFiltro" runat="server" CssClass="form-select">
+                <asp:ListItem Text="Todos los perfiles" Value="" />
+                <asp:ListItem Text="Gerente" Value="1" />
+                <asp:ListItem Text="Mesero" Value="2" />
+            </asp:DropDownList>
+        </div>
+        <div class="col-md-4">
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+        </div>
+    </asp:Panel>
+
     <asp:GridView ID="dgvUsuarios" runat="server" DataKeyNames="Id" AutoGenerateColumns="false"
-        CssClass="table table-striped table-hover" EmptyDataText="No hay usuarios cargados."
+        CssClass="table table-striped table-hover" EmptyDataText="No se encontraron usuarios."
         OnSelectedIndexChanged="dgvUsuarios_SelectedIndexChanged" OnRowDataBound="dgvUsuarios_RowDataBound">
         <Columns>
             <asp:BoundField HeaderText="Apellido" DataField="Apellido" />

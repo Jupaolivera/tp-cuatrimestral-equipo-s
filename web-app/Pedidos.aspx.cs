@@ -46,7 +46,30 @@ namespace web_app
                 }
                 btnAbrir.Enabled = ddlMesa.Items.Count > 0;
 
-                dgvPedidos.DataSource = negocio.listar(idMesero);
+                cargarPedidos();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+        }
+
+        private void cargarPedidos()
+        {
+            try
+            {
+                PedidoNegocio negocio = new PedidoNegocio();
+                List<Pedido> lista = negocio.listar(idMeseroFiltro());
+
+                if (ddlEstadoFiltro.SelectedValue != "")
+                    lista = lista.FindAll(x => x.Estado.ToString() == ddlEstadoFiltro.SelectedValue);
+
+                string mesa = txtMesaFiltro.Text.Trim();
+                if (mesa != "")
+                    lista = lista.FindAll(x => x.MesaNumero.ToString().Contains(mesa));
+
+                dgvPedidos.DataSource = lista;
                 dgvPedidos.DataBind();
             }
             catch (Exception ex)
@@ -56,19 +79,31 @@ namespace web_app
             }
         }
 
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            cargarPedidos();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            ddlEstadoFiltro.SelectedIndex = 0;
+            txtMesaFiltro.Text = "";
+            cargarPedidos();
+        }
+
         protected void btnAbrir_Click(object sender, EventArgs e)
         {
             try
             {
                 if (ddlMesa.Items.Count == 0)
                 {
-                    lblMensaje.Text = "No hay mesas asignadas hoy sin pedido abierto.";
+                    lblError.Text = "No hay mesas asignadas hoy sin pedido abierto.";
                     return;
                 }
 
                 PedidoNegocio negocio = new PedidoNegocio();
                 negocio.abrir(int.Parse(ddlMesa.SelectedValue));
-                lblMensaje.Text = "";
+                lblError.Text = "";
                 cargar();
             }
             catch (Exception ex)

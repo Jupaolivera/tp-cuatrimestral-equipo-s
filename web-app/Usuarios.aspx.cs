@@ -13,20 +13,44 @@ namespace web_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+                cargar();
+        }
+
+        private void cargar()
+        {
             try
             {
-                if (!IsPostBack)
-                {
-                    UsuarioNegocio negocio = new UsuarioNegocio();
-                    dgvUsuarios.DataSource = negocio.listar();
-                    dgvUsuarios.DataBind();
-                }
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                List<Usuario> lista = negocio.listar();
+
+                string texto = txtFiltro.Text.Trim().ToLower();
+                if (texto != "")
+                    lista = lista.FindAll(x => x.Nombre.ToLower().Contains(texto) || x.Apellido.ToLower().Contains(texto) || x.Email.ToLower().Contains(texto));
+
+                if (ddlPerfilFiltro.SelectedValue != "")
+                    lista = lista.FindAll(x => x.Perfil.ToString() == ddlPerfilFiltro.SelectedValue);
+
+                dgvUsuarios.DataSource = lista;
+                dgvUsuarios.DataBind();
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
                 Response.Redirect("Error.aspx");
             }
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            cargar();
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtFiltro.Text = "";
+            ddlPerfilFiltro.SelectedIndex = 0;
+            cargar();
         }
 
         protected void dgvUsuarios_SelectedIndexChanged(object sender, EventArgs e)

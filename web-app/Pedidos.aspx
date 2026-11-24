@@ -15,10 +15,27 @@
         </div>
     </div>
 
-    <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" />
+    <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" />
 
-    <asp:GridView ID="dgvPedidos" runat="server" CssClass="table"
-        AutoGenerateColumns="false" DataKeyNames="Id"
+    <asp:Panel runat="server" DefaultButton="btnBuscar" CssClass="row g-2 mb-3">
+        <div class="col-md-3">
+            <asp:DropDownList ID="ddlEstadoFiltro" runat="server" CssClass="form-select">
+                <asp:ListItem Text="Todos los estados" Value="" />
+                <asp:ListItem Text="Abierto" Value="1" />
+                <asp:ListItem Text="Cerrado" Value="2" />
+            </asp:DropDownList>
+        </div>
+        <div class="col-md-3">
+            <asp:TextBox ID="txtMesaFiltro" runat="server" CssClass="form-control" placeholder="Número de mesa" />
+        </div>
+        <div class="col-md-4">
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-primary" OnClick="btnBuscar_Click" />
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" OnClick="btnLimpiar_Click" />
+        </div>
+    </asp:Panel>
+
+    <asp:GridView ID="dgvPedidos" runat="server" CssClass="table table-striped table-hover"
+        AutoGenerateColumns="false" DataKeyNames="Id" EmptyDataText="No se encontraron pedidos."
         OnSelectedIndexChanged="dgvPedidos_SelectedIndexChanged">
         <Columns>
             <asp:BoundField HeaderText="N°" DataField="Id" />
@@ -27,7 +44,7 @@
             <asp:BoundField HeaderText="Apertura" DataField="FechaApertura" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
             <asp:BoundField HeaderText="Estado" DataField="EstadoTexto" />
             <asp:BoundField HeaderText="Total" DataField="Total" DataFormatString="{0:C}" />
-            <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="agregar" />
+            <asp:CommandField HeaderText="Acción" ShowSelectButton="true" SelectText="Ver detalle" />
         </Columns>
     </asp:GridView>
 </asp:Content>

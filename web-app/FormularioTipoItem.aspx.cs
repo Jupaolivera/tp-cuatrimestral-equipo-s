@@ -11,7 +11,6 @@ namespace web_app
     public partial class FormularioTipoItem : System.Web.UI.Page
     {
         protected System.Web.UI.WebControls.TextBox txtDescripcion;
-        protected System.Web.UI.WebControls.Label lblMensaje;
         protected System.Web.UI.WebControls.Button btnAceptar;
         protected System.Web.UI.WebControls.Button btnEliminar;
         protected System.Web.UI.WebControls.Button btnCancelar;
@@ -49,14 +48,11 @@ namespace web_app
         {
             try
             {
-                if (txtDescripcion.Text == "")
-                {
-                    lblMensaje.Text = "La descripción es obligatoria.";
+                if (!Page.IsValid)
                     return;
-                }
 
                 TipoItem tipo = new TipoItem();
-                tipo.Descripcion = txtDescripcion.Text;
+                tipo.Descripcion = txtDescripcion.Text.Trim();
 
                 TipoItemNegocio negocio = new TipoItemNegocio();
 
