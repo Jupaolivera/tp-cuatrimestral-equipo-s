@@ -134,13 +134,24 @@ namespace web_app
                 Response.Redirect("Error.aspx", false);
             }
         }
-
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
             try
             {
+                int idMesa = int.Parse(hfIdMesa.Value);
+
+                PedidoNegocio pedidoNeg = new PedidoNegocio();
+                foreach (Pedido p in pedidoNeg.listar())
+                {
+                    if (p.Mesa.Id == idMesa && p.Estado == 1)
+                    {
+                        lblMensaje.Text = "No se puede eliminar la mesa porque tiene un pedido abierto.";
+                        return;
+                    }
+                }
+
                 MesaNegocio negocio = new MesaNegocio();
-                negocio.eliminar(int.Parse(hfIdMesa.Value));
+                negocio.eliminar(idMesa);
 
                 pnlFormulario.Visible = false;
                 cargarMesas();

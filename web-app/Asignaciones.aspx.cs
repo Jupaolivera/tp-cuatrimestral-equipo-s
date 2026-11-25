@@ -64,6 +64,12 @@ namespace web_app
         {
             try
             {
+                if (ddlMesa.Items.Count == 0 || ddlMesero.Items.Count == 0)
+                {
+                    lblMensaje.Text = "Debe haber al menos una mesa y un mesero activo disponibles.";
+                    return;
+                }
+
                 int idMesa = int.Parse(ddlMesa.SelectedValue);
                 int idMesero = int.Parse(ddlMesero.SelectedValue);
 
@@ -85,7 +91,6 @@ namespace web_app
                         existeHoy = true;
                     }
                 }
-
 
                 if (existeHoy)
                 {
