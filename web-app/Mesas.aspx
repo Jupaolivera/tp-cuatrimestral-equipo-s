@@ -20,7 +20,7 @@
                 </div>
             </asp:Panel>
 
-        <asp:GridView ID="dgvMesas" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="False" EmptyDataText="No se encontraron mesas." OnRowCommand="dgvMesas_RowCommand">
+            <asp:GridView ID="dgvMesas" runat="server" CssClass="table table-striped table-hover" AutoGenerateColumns="False" EmptyDataText="No se encontraron mesas." OnRowCommand="dgvMesas_RowCommand">
                 <Columns>
                     <asp:BoundField DataField="Numero" HeaderText="N° de Mesa" />
                     <asp:BoundField DataField="Capacidad" HeaderText="Lugares" />
@@ -58,6 +58,7 @@
                 <asp:RangeValidator ErrorMessage="La capacidad debe ser un entero entre 1 y 100." ControlToValidate="txtCapacidad" ValidationGroup="vgMesa" Type="Integer" MinimumValue="1" MaximumValue="100" CssClass="text-danger" Display="Dynamic" runat="server" />
             </div>
 
+            <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger d-block mb-2" />
             <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" />
 
             <asp:Button ID="btnGuardar" runat="server" Text="Aceptar" CssClass="btn btn-primary" ValidationGroup="vgMesa" OnClick="btnGuardar_Click" />
