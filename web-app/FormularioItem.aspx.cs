@@ -21,7 +21,24 @@ namespace web_app
         protected System.Web.UI.WebControls.Button btnAceptar;
         protected System.Web.UI.WebControls.Button btnEliminar;
         protected System.Web.UI.WebControls.Button btnCancelar;
-
+        protected System.Web.UI.WebControls.Label lblError;
+        // true si el ítem está cargado en algún pedido abierto
+        private bool itemEnPedidoAbierto(int idItem)
+        {
+            PedidoNegocio pedidoNegocio = new PedidoNegocio();
+            foreach (Pedido p in pedidoNegocio.listar())
+            {
+                if (p.Estado == 1)
+                {
+                    foreach (DetallePedido d in pedidoNegocio.listarDetalles(p.Id))
+                    {
+                        if (d.Item.Id == idItem)
+                            return true;
+                    }
+                }
+            }
+            return false;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -53,6 +70,12 @@ namespace web_app
                         }
 
                         btnEliminar.Visible = true;
+                        if (itemEnPedidoAbierto(id))
+                        {
+                            lblError.Text = "Este ítem está en un pedido abierto. No se puede modificar ni eliminar hasta que el pedido se cierre.";
+                            btnAceptar.Enabled = false;
+                            btnEliminar.Enabled = false;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -69,7 +92,11 @@ namespace web_app
             {
                 if (!Page.IsValid)
                     return;
-
+                if (Request.QueryString["id"] != null && itemEnPedidoAbierto(int.Parse(Request.QueryString["id"])))
+                {
+                    lblError.Text = "Este ítem está en un pedido abierto. No se puede modificar hasta que el pedido se cierre.";
+                    return;
+                }
                 // El precio se acepta con punto o con coma como separador decimal
                 decimal precio = decimal.Parse(txtPrecio.Text.Trim().Replace(',', '.'), CultureInfo.InvariantCulture);
                 int stock = int.Parse(txtStock.Text.Trim());
@@ -107,8 +134,15 @@ namespace web_app
         {
             try
             {
-                itemNegocio negocio = new itemNegocio();
-                negocio.eliminar(int.Parse(Request.QueryString["id"]));
+                int id = int.Parse(Request.QueryString["id"]);
+
+                if (itemEnPedidoAbierto(id))
+                {
+                    lblError.Text = "Este ítem está en un pedido abierto. No se puede eliminar hasta que el pedido se cierre.";
+                    return;
+                }
+
+                new itemNegocio().eliminar(id);
                 Response.Redirect("Items.aspx", false);
             }
             catch (Exception ex)

@@ -33,7 +33,7 @@
                 <label for="ddlTipo" class="form-label">Tipo</label>
                 <asp:DropDownList ID="ddlTipo" runat="server" CssClass="form-select" />
             </div>
-
+            <asp:Label ID="lblError" runat="server" CssClass="text-danger d-block mb-3" />
             <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" OnClick="btnEliminar_Click" CausesValidation="false" Visible="false" />
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" CausesValidation="false" />
